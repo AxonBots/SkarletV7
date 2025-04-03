@@ -917,7 +917,17 @@ async def settings(client, message):
                     callback_data=f'setgs#is_shortlink#{settings["is_shortlink"]}#{grp_id}',
                 ),
             ],
-        ]
+            [
+                InlineKeyboardButton(
+                    'Premium Group',
+                    callback_data=f'setgs#is_premium_group#{settings["is_premium_group"]}#{grp_id}',
+                ),
+                InlineKeyboardButton(
+                    '✅ Oɴ' if settings["is_premium_group"] else '❌ Oғғ',
+                    callback_data=f'setgs#is_premium_group#{settings["is_premium_group"]}#{grp_id}',
+                ),
+            ],
+            ]
         btn = [[
             InlineKeyboardButton("Oᴘᴇɴ Hᴇʀᴇ ↓", callback_data=f"opnsetgrp#{grp_id}"),
             InlineKeyboardButton("Oᴘᴇɴ Iɴ PM ⇲", callback_data=f"opnsetpm#{grp_id}")
@@ -1454,3 +1464,33 @@ async def purge_requests(client, message):
             parse_mode=enums.ParseMode.MARKDOWN,
             disable_web_page_preview=True
         )
+	    
+
+@Client.on_message(filters.command("addpremiumgroup") & filters.user(ADMINS))
+async def add_premium_group(bot, message):
+    if len(message.command) < 2:
+        await message.reply("Usage: /addpremiumgroup <group_id>")
+        return
+    try:
+        group_id = int(message.command[1])
+    except ValueError:
+        await message.reply("Please provide a valid group ID (numeric).")
+        return
+    await db.add_premium_group(group_id)
+    PREMIUM_GROUPS.add(group_id)
+    await message.reply(f"Group {group_id} added to premium list. Token system disabled for this group.")
+
+
+@Client.on_message(filters.command("removepremiumgroup") & filters.user(ADMINS))
+async def remove_premium_group(bot, message):
+    if len(message.command) < 2:
+        await message.reply("Usage: /removepremiumgroup <group_id>")
+        return
+    try:
+        group_id = int(message.command[1])
+    except ValueError:
+        await message.reply("Please provide a valid group ID (numeric).")
+        return
+    await db.remove_premium_group(group_id)
+    PREMIUM_GROUPS.discard(group_id)
+    await message.reply(f"Group {group_id} removed from premium list. Token system enabled for this group.")
