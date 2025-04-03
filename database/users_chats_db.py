@@ -49,8 +49,8 @@ default_setgs = {
     'is_shortlink': SHORTLINK_MODE,
     'fsub': None,
     'tutorial': TUTORIAL,
-    'is_tutorial': IS_TUTORIAL
-    'is_premium_group': False  # Yeh line add karo
+    'is_tutorial': IS_TUTORIAL,
+    'is_premium_group': False,  # Yeh line add kiya, comma bhi sahi kiya
 }
 
 
