@@ -49,8 +49,7 @@ default_setgs = {
     'is_shortlink': SHORTLINK_MODE,
     'fsub': None,
     'tutorial': TUTORIAL,
-    'is_tutorial': IS_TUTORIAL,
-    'token_exempt': False  # Naya field for token exemption
+    'is_tutorial': IS_TUTORIAL
 }
 
 
@@ -179,6 +178,7 @@ class Database:
         return b_users, b_chats
     
 
+
     async def add_chat(self, chat, title):
         chat = self.new_group(chat, title)
         await self.grp.insert_one(chat)
@@ -226,6 +226,20 @@ class Database:
 
     async def get_db_size(self):
         return (await self.db.command("dbstats"))['dataSize']
+
+    async def add_premium_group(self, group_id):
+        settings = await self.get_settings(group_id)
+        settings['is_premium_group'] = True
+        await self.update_settings(group_id, settings)
+
+    async def remove_premium_group(self, group_id):
+        settings = await self.get_settings(group_id)
+        settings['is_premium_group'] = False
+        await self.update_settings(group_id, settings)
+
+    async def is_premium_group(self, group_id):
+        settings = await self.get_settings(group_id)
+        return settings.get('is_premium_group', False)
 
     async def get_user(self, user_id):
         user_data = await self.users.find_one({"id": user_id})
