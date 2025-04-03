@@ -49,7 +49,8 @@ default_setgs = {
     'is_shortlink': SHORTLINK_MODE,
     'fsub': None,
     'tutorial': TUTORIAL,
-    'is_tutorial': IS_TUTORIAL
+    'is_tutorial': IS_TUTORIAL,
+    'token_exempt': False  # Naya field for token exemption
 }
 
 
@@ -177,7 +178,6 @@ class Database:
         b_users = [user['id'] async for user in users]
         return b_users, b_chats
     
-
 
     async def add_chat(self, chat, title):
         chat = self.new_group(chat, title)
