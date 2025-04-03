@@ -693,6 +693,12 @@ async def get_cap(settings, remaining_seconds, files, query, total_results, sear
             cap += f"<b>📁 <a href='https://telegram.me/{temp.U_NAME}?start=files_{file['file_id']}'>[{get_size(file['file_size'])}] {' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('@') and not x.startswith('www.'), file['file_name'].split()))}\n\n</a></b>"
     return cap
 
+async def is_check_admin(bot, chat_id, user_id):
+    try:
+        member = await bot.get_chat_member(chat_id, user_id)
+        return member.status in [enums.ChatMemberStatus.ADMINISTRATOR, enums.ChatMemberStatus.OWNER]
+    except:
+        return False
 
 async def get_seconds(time_string):
     def extract_value_and_unit(ts):
