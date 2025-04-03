@@ -1478,7 +1478,7 @@ async def add_premium_group(bot, message):
         return
     await db.add_premium_group(group_id)
     PREMIUM_GROUPS.add(group_id)
-    await message.reply(f"Group {group_id} added to premium list. Token system disabled for this group.")
+    await message.reply(f"**ɢʀᴏᴜᴘ {group_id} ᴀᴅᴅᴇᴅ ᴛᴏ ᴘʀᴇᴍɪᴜᴍ ʟɪꜱᴛ. ᴛᴏᴋᴇɴ ꜱʏꜱᴛᴇᴍ ᴅɪꜱᴀʙʟᴇᴅ ꜰᴏʀ ᴛʜɪꜱ ɢʀᴏᴜᴘ.**")
 
 
 @Client.on_message(filters.command("removepremiumgroup") & filters.user(ADMINS))
@@ -1493,4 +1493,4 @@ async def remove_premium_group(bot, message):
         return
     await db.remove_premium_group(group_id)
     PREMIUM_GROUPS.discard(group_id)
-    await message.reply(f"Group {group_id} removed from premium list. Token system enabled for this group.")
+    await message.reply(f"**ɢʀᴏᴜᴘ {group_id} ʀᴇᴍᴏᴠᴇᴅ ꜰʀᴏᴍ ᴘʀᴇᴍɪᴜᴍ ʟɪꜱᴛ. ᴛᴏᴋᴇɴ ꜱʏꜱᴛᴇᴍ ᴇɴᴀʙʟᴇᴅ ꜰᴏʀ ᴛʜɪꜱ ɢʀᴏᴜᴘ.**")
