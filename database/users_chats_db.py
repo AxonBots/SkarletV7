@@ -50,6 +50,7 @@ default_setgs = {
     'fsub': None,
     'tutorial': TUTORIAL,
     'is_tutorial': IS_TUTORIAL
+    'is_premium_group': False  # Yeh line add karo
 }
 
 
